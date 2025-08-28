@@ -48,6 +48,10 @@
         left: 'center'
       },
       tooltip: {},
+      legend: {
+        data: ['Mais chuva', 'Menos chuva'],
+        bottom: 15
+      },
       xAxis: {
         name: 'Ano',
         type: 'category',
@@ -61,8 +65,7 @@
           '2021',
           '2022',
           '2023',
-          '2024',
-          '2025'
+          '2024'
         ]
       },
       yAxis: {
@@ -71,11 +74,28 @@
       },
       series: [
         {
-          data: [386.7 - 404.6, 295 - 386.7, 211.5 - 295, 764.8 - 211.5, 497.9 - 764.8,
-          591.3 - 497.9, 388.5 - 591.3, 938.6 - 388.5, 465.6 - 938.6, 378.2 - 465.6, 489.1 - 378.2],
-          type: 'line'
+          name: 'Mais chuva',
+          data: [0, 0, 0, 764.8 - 211.5, 0,
+          591.3 - 497.9, 0, 938.6 - 388.5, 0, 0],
+          type: 'bar',
+          stack: 'all'
+        },
+        {
+          name: 'Menos chuva',
+          data: [386.7 - 404.6, 295 - 386.7, 211.5 - 295, 0, 497.9 - 764.8,
+          0, 388.5 - 591.3, 0, 465.6 - 938.6, 378.2 - 465.6],
+          type: 'bar',
+          stack: 'all',
+          itemStyle: {
+            color: '#fa4a41'
+          }
         }
-      ]
+      ],
+      dataZoom: [
+        {
+          type: 'inside'
+        }
+      ],
     };
 
     if (option && typeof option === 'object') {
