@@ -8,8 +8,8 @@
   <meta charset="utf-8">
 </head>
 <body style="height: 100%; margin: 0">
-  <div id="container" style="height: 70%"></div>
-  <div id="c2" style="height: 30%"></div>
+  <div id="container" style="height: 60%"></div>
+  <div id="c2" style="height: 40%"></div>
 
   <select id="seletor" style="top: 0; position: absolute; right: 0">
     <option value="EXP">Exportações</option>
@@ -96,6 +96,12 @@
         },
         tooltip: {
           trigger: 'axis',
+          axisPointer: {
+            type: 'shadow',
+            shadowStyle: {
+              color: 'rgba(150, 150, 200, 0.1)'
+            }
+          },
           valueFormatter: (value) => dolar(value)
         },
         legend: {
@@ -104,13 +110,16 @@
         grid: {
           left: '3%',
           right: '4%',
-          bottom: '3%',
+          bottom: '30%',
           containLabel: true
         },
         toolbox: {
-          trigger: 'axis'
+          trigger: 'axis',
         },
         xAxis: {
+          name: 'Série histórica',
+          nameLocation: 'middle',
+          nameGap: 30,
           type: 'category',
           boundaryGap: false,
           data: Object.keys(dados.BAL)
@@ -119,23 +128,38 @@
           type: 'value',
           name: 'Bilhões em US$'
         },
+        dataZoom: [
+          {
+            type: 'inside'
+          },
+          {
+            type: 'slider',
+            show: true,
+            height: 25,
+            left: '10%',
+            right: '10%'
+          }
+        ],
         series: [
           {
             name: 'Exportações',
             type: 'line',
-            stack: 'Total',
-            data: Object.values(dados.EXP).map(v => somaAno(v) / 1000000000)
+            smooth: true,
+            emphasis: { focus: 'series' },
+            data: Object.values(dados.EXP).map(v => somaAno(v) / 1000000000),
           },
           {
             name: 'Importações',
             type: 'line',
-            stack: 'Total',
+            smooth: true,
+            emphasis: { focus: 'series' },
             data: Object.values(dados.IMP).map(v => somaAno(v) / 1000000000)
           },
           {
             name: 'Balança Comercial',
             type: 'line',
-            stack: 'Total',
+            smooth: true,
+            emphasis: { focus: 'series' },
             data: Object.values(dados.BAL).map(v => somaAno(v) / 1000000000)
           },
         ]
@@ -153,6 +177,7 @@
             title: {
               text: `Volume na balança comercial do Brasil (${ano})`,
               subtext: 'Dados do Monitor do Comércio Exterior Brasileiro',
+              sublink: 'https://balanca.economia.gov.br/balanca/IPQ/index.html',
               left: 'center'
             },
             tooltip: {
@@ -206,6 +231,7 @@
               title: {
                 text: `Volume de Importação do Brasil (${ano})`,
                 subtext: 'Dados do Monitor do Comércio Exterior Brasileiro',
+                sublink: 'https://balanca.economia.gov.br/balanca/IPQ/index.html',
                 left: 'center'
               },
               tooltip: {
@@ -258,6 +284,7 @@
               title: {
                 text: `Volume de Exportações do Brasil (${ano})`,
                 subtext: 'Dados do Monitor do Comércio Exterior Brasileiro',
+                sublink: 'https://balanca.economia.gov.br/balanca/IPQ/index.html',
                 left: 'center'
               },
               tooltip: {
